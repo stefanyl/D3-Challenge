@@ -7,7 +7,7 @@ var svgSize = {
                             
 var margin = {
     top: 30,
-    bottom : 30,
+    bottom : 60,
     left : 100,
     right : 30
 }
@@ -18,7 +18,7 @@ var chartSize = {
         width: svgSize.width - margin.left - margin.right,
         height: svgSize.height - margin.top - margin.bottom
 }
-
+// Create an SVG wrapper and append SVG group
 var svg = d3.select("#scatter").append("svg")
                                 .attr("width", svgSize.width)
                                 .attr("height", svgSize.height)
@@ -27,10 +27,12 @@ var svg = d3.select("#scatter").append("svg")
 var frame = svg.append("g")
                 .attr("transform", `translate(${margin.left}, ${margin.top})`)
                 
-                
+
+// Import data using d3.csv              
 d3.csv(".\\assets\\data\\data.csv").then(data =>{
     console.log(data)
 
+    // Use the healthcare and income variables.
     data.forEach(state => {
         state.healthcare = +state.healthcare;
         state.income = +state.income
@@ -61,12 +63,12 @@ d3.csv(".\\assets\\data\\data.csv").then(data =>{
     var chartData = frame.append("g").attr("id", "ChartData")
 
     //chartData.call(toolTip)
-    var toolTip = d3.tip()
+    /* var toolTip = d3.tip()
                     .attr("class", "tooltip")
                     .offset([80, 60])
                     .html(function(d){
                         return ("<div>Hi</div>")
-                    })
+                    }) */
 
     var circles = chartData.selectAll("circle").data(data)
                             .enter().append("circle")
@@ -75,12 +77,14 @@ d3.csv(".\\assets\\data\\data.csv").then(data =>{
                             .attr("cy", state => yScale(state.income))
                             .attr("stroke", "blue")
                             .attr("fill", "white")
+                            /*
                             .attr("opacity", ".5")
                             .on("mouseover", function(d)
                             {
                                 toolTip.show(data, this);
                             })
                             .on("mouseout")
+                            */
 
     var text = chartData.selectAll("text").data(data)
                         .enter().append("text")

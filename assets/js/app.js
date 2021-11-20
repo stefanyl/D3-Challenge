@@ -72,15 +72,17 @@ d3.csv(".\\assets\\data\\data.csv").then(data =>{
                     .html(function(d){
                         return ("<div>Hi</div>")
                     }) */
-
+    
+    // Create the circles 
     var circles = chartData.selectAll("circle").data(data)
                             .enter().append("circle")
                             .attr("r", radius)
                             .attr("cx", state => xScale(state.healthcare))
                             .attr("cy", state => yScale(state.income))
-                            .attr("stroke", "blue")
-                            .attr("fill", "lightblue")
-                            .attr("opacity", ".5")
+                            .attr("class", "stateCircle")
+                            //.attr("stroke", "blue")
+                            //.attr("fill", "lightblue")
+                            //.attr("opacity", ".5")
                             /*
                             .on("mouseover", function(d)
                             {
@@ -88,12 +90,27 @@ d3.csv(".\\assets\\data\\data.csv").then(data =>{
                             })
                             .on("mouseout")
                             */
-
+    // Create the text abbreviations for each data point
     var text = chartData.selectAll("text").data(data)
                         .enter().append("text")
                         .attr("dx", state => xScale(state.healthcare))
                         .attr("dy", state => yScale(state.income))
                         .text(state => state.abbr)
-                        .attr("font-size", (radius * .5))
+                        .attr("class", "stateText")
+                        .attr('font-size', (radius * .9))
+
+    /* / Create axes labels
+    frame.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left + 40)
+      .attr("x", 0 - (height / 2))
+      .attr("dy", "1em")
+      .attr("class", "axisText")
+      .text("Household");
+
+    frame.append("text")
+      .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
+      .attr("class", "axisText")
+      .text("Lacks Healthcare (%)" */
 
 })

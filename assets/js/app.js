@@ -7,7 +7,7 @@ var svgSize = {
                             
 var margin = {
     top: 30,
-    bottom : 60,
+    bottom : 100,
     left : 100,
     right : 30
 }
@@ -98,19 +98,23 @@ d3.csv(".\\assets\\data\\data.csv").then(data =>{
                         .text(state => state.abbr)
                         .attr("class", "stateText")
                         .attr('font-size', (radius * .9))
-
-    /* / Create axes labels
+    
+    // Add the x-axis title (healthcare). Use class provided in d3Style.css
     frame.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left + 40)
-      .attr("x", 0 - (height / 2))
-      .attr("dy", "1em")
-      .attr("class", "axisText")
-      .text("Household");
-
+        .attr("y", chartSize.height + margin.bottom/2 - 10)
+        .attr("x", chartSize.width / 2)
+        .attr("dy", "1em")
+        .classed("aText", true)
+        .text("Lacks Healthcare (%)");
+                            
+    // Add the y-axis title (income). Use class provided in d3Style.css
     frame.append("text")
-      .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
-      .attr("class", "axisText")
-      .text("Lacks Healthcare (%)" */
+        .attr("transform", "rotate(-90)")
+        .attr("y", 30 - margin.left)
+        .attr("x", 0 - (chartSize.height / 2))
+        .attr("dy", "1em")
+        .classed("aText", true)
+        .text("Household Income (Median)");
 
+    
 })

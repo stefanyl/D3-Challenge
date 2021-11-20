@@ -1,7 +1,7 @@
 // @TODO: YOUR CODE HERE!
 var svgSize = {
-    width: 800,
-    height: 450
+    width: 960,
+    height: 500
 
 }
                             
@@ -32,7 +32,7 @@ var frame = svg.append("g")
 d3.csv(".\\assets\\data\\data.csv").then(data =>{
     console.log(data)
 
-    // Use the healthcare and income variables.
+    // Use the healthcare and income variables. Parse data.
     data.forEach(state => {
         state.healthcare = +state.healthcare;
         state.income = +state.income
@@ -44,19 +44,22 @@ d3.csv(".\\assets\\data\\data.csv").then(data =>{
     //console.log(xvals)
     //console.log(yvals)
 
+    // Create scale functions
     var xScale = d3.scaleLinear()
-                    .domain([.9 * d3.min(xvals), d3.max(xvals)])
+                    .domain([.8 * d3.min(xvals), d3.max(xvals)])
                     .range([0, chartSize.width])
 
     var yScale = d3.scaleLinear()
                     .domain([.9 * d3.min(yvals), d3.max(yvals)])
                     .range([chartSize.height, 0])
-
+    
+    // Create axis functions
     var bottomAxis = d3.axisBottom(xScale)
     var leftAxis = d3.axisLeft(yScale)
-
+    
+    // Append axes to the chart frame
     frame.append("g").attr("transform", `translate(0, ${chartSize.height})`)
-                            .call(bottomAxis)
+                     .call(bottomAxis)
     frame.append("g").call(leftAxis)
 
 
@@ -76,9 +79,9 @@ d3.csv(".\\assets\\data\\data.csv").then(data =>{
                             .attr("cx", state => xScale(state.healthcare))
                             .attr("cy", state => yScale(state.income))
                             .attr("stroke", "blue")
-                            .attr("fill", "white")
-                            /*
+                            .attr("fill", "lightblue")
                             .attr("opacity", ".5")
+                            /*
                             .on("mouseover", function(d)
                             {
                                 toolTip.show(data, this);
@@ -91,5 +94,6 @@ d3.csv(".\\assets\\data\\data.csv").then(data =>{
                         .attr("dx", state => xScale(state.healthcare))
                         .attr("dy", state => yScale(state.income))
                         .text(state => state.abbr)
+                        .attr("font-size", (radius * .5))
 
 })
